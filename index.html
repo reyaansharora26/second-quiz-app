@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sports Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .quiz-container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 20px;
+      font-size: 1.2em;
+    }
+    .options {
+      display: flex;
+      justify-content: center;
+      gap: 12px; /* spacing between buttons */
+      flex-wrap: wrap; /* wrap if screen is small */
+    }
+    .option-btn {
+      background: #2980b9;
+      color: white;
+      border: none;
+      padding: 8px 16px; /* smaller padding */
+      font-size: 14px; /* smaller font */
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+      min-width: 100px;
+    }
+    .option-btn:hover {
+      background: #3498db;
+    }
+    .score {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 20px;
+      color: #27ae60;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Sports Quiz</h1>
+  <div class="quiz-container">
+    <div id="quiz"></div>
+    <div id="score" class="score"></div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "Which country won the FIFA World Cup in 2018?",
+        options: ["Brazil", "France", "Germany", "Argentina"],
+        answer: "France"
+      },
+      {
+        question: "How many points is a shot made from behind the three-point line worth?",
+        options: ["1", "2", "3", "4"],
+        answer: "3"
+      },
+      {
+        question: "Who is considered one of the greatest basketball players of all time, nicknamed 'His Airness'?",
+        options: ["LeBron James", "Kobe Bryant", "Michael Jordan", "Shaquille O'Neal"],
+        answer: "Michael Jordan"
+      },
+      {
+        question: "In which city were the first modern Olympic Games held in 1896?",
+        options: ["Athens", "Paris", "London", "Rome"],
+        answer: "Athens"
+      },
+      {
+        question: "Which NBA team has won the most championships?",
+        options: ["Chicago Bulls", "Boston Celtics", "Los Angeles Lakers", "Golden State Warriors"],
+        answer: "Boston Celtics"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    const quizEl = document.getElementById("quiz");
+    const scoreEl = document.getElementById("score");
+
+    function loadQuestion() {
+      const q = quizData[currentQuestion];
+      const optionsHtml = q.options.map(
+        option => `<button class="option-btn">${option}</button>`
+      ).join("");
+      quizEl.innerHTML = `
+        <div class="question">${currentQuestion + 1}. ${q.question}</div>
+        <div class="options">${optionsHtml}</div>
+      `;
+
+      const buttons = document.querySelectorAll(".option-btn");
+      buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (btn.textContent === q.answer) {
+            score++;
+          }
+          currentQuestion++;
+          if (currentQuestion < quizData.length) {
+            loadQuestion();
+          } else {
+            showScore();
+          }
+        });
+      });
+      scoreEl.textContent = "";
+    }
+
+    function showScore() {
+      quizEl.innerHTML = "<h2>You finished the quiz!</h2>";
+      scoreEl.textContent = `Your score: ${score} / ${quizData.length}`;
+    }
+
+    // Start the quiz
+    loadQuestion();
+  </script>
+
+</body>
+</html>
