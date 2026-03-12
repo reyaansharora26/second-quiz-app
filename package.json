@@ -1,0 +1,13 @@
+{
+  "name": "sports-quiz",
+  "version": "1.0.0",
+  "description": "A fun sports trivia quiz application",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Build complete'",
+    "start": "echo 'Static site ready'"
+  },
+  "keywords": ["quiz", "sports", "trivia"],
+  "author": "",
+  "license": "MIT"
+}
